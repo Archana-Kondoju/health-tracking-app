@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  background-image: url('/public/bg-image.png');
+  background-size: cover; /* Ensures the image covers the whole screen */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repeating the image */
+  min-height: 50vh; /* Makes sure the background takes the full viewport height */
+  margin: 0;
+  font-family: Arial, sans-serif; /* Apply a default font-family */
+}
+
+#root {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+   */
+   min-height: 100vh;
+  /* padding: 20px; */
+  background-color: rgba(207, 161, 233, 0.8); /* Optional: Adds a white overlay with transparency */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
