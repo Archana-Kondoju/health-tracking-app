@@ -4,7 +4,7 @@ const HealthRecord = require('../models/HealthRecord');
 const router = express.Router();
 
 // POST: Create a new health record
-router.post('/health-records', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const record = new HealthRecord(req.body);
     await record.save();
@@ -15,7 +15,7 @@ router.post('/health-records', async (req, res) => {
 });
 
 // GET: Get all health records
-router.get('/health-records', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const records = await HealthRecord.find();
     res.json(records);
@@ -25,19 +25,25 @@ router.get('/health-records', async (req, res) => {
 });
 
 // GET: Get a specific health record by ID
-router.get('/health-records/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const record = await HealthRecord.findById(req.params.id);
+    if (!record) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
     res.json(record);
   } catch (err) {
-    res.status(404).json({ error: 'Record not found' });
+    res.status(404).json({ error: 'Invalid record ID' });
   }
 });
 
 // PUT: Update a health record by ID
-router.put('/health-records:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const record = await HealthRecord.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!record) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
     res.json(record);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -45,9 +51,12 @@ router.put('/health-records:id', async (req, res) => {
 });
 
 // DELETE: Delete a health record by ID
-router.delete('/health-records/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    await HealthRecord.findByIdAndDelete(req.params.id);
+    const record = await HealthRecord.findByIdAndDelete(req.params.id);
+    if (!record) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
     res.json({ message: 'Record deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
