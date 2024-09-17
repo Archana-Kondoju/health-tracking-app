@@ -9,19 +9,16 @@ const SearchBar = ({ onSearch,isVisible }) => {
   });
 
   const handleChange = (e) => {
-    setFilters({
+    const newFilters = {
       ...filters,
       [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch(filters);
+    };
+    setFilters(newFilters);
+    onSearch(newFilters);  // Call onSearch immediately on each change
   };
 
   return (
-    <form onSubmit={handleSearch} className={`bg-gradient-to-r from-purple-400/70 via-pink-400/70 to-red-400/70 shadow-md rounded-lg p-4 mb-6 space-y-4 transition-all duration-300 ${isVisible ? 'block' : 'hidden'} lg:block md:block sm:block`}>
+    <form className={`bg-gradient-to-r from-purple-400/70 via-pink-400/70 to-red-400/70 shadow-md rounded-lg p-4 mb-6 space-y-4 transition-all duration-300 ${isVisible ? 'block' : 'hidden'} lg:block md:block sm:block`}>
         <div className='flex flex-row justify-center'>
           <h3 className='font-bold text-xl text-purple-700 underline'>Filters</h3>
         </div>
